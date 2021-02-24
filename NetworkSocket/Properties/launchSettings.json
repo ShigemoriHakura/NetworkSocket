@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NetworkSocket": {
+      "commandName": "Project"
+    },
+    "Example": {
+      "commandName": "Project"
+    }
+  }
+}

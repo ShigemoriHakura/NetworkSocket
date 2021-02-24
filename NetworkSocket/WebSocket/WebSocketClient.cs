@@ -21,6 +21,14 @@ namespace NetworkSocket.WebSocket
         private readonly Uri address;
 
         /// <summary>
+        /// 获取地址
+        /// </summary>
+        public Uri GetAddress()
+        {
+            return address;
+        }
+
+        /// <summary>
         /// ping任务表
         /// </summary>
         private readonly TaskSetterTable<Guid> pingTable = new TaskSetterTable<Guid>();

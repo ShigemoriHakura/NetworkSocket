@@ -170,20 +170,14 @@ namespace NetworkSocket.WebSocket
         /// <returns></returns>
         private byte[] GenerateHandshakeBuffer(WebSocketClient client, string path, out string secKey)
         {
-            var host = client.RemoteEndPoint.ToString();
-            if (client.RemoteEndPoint is DnsEndPoint dnsEndpoint)
-            {
-                host = string.Format("{0}:{1}", dnsEndpoint.Host, dnsEndpoint.Port);
-            }
-
             var keyBytes = SHA1.Create().ComputeHash(Guid.NewGuid().ToByteArray());
             secKey = Convert.ToBase64String(keyBytes);
 
             var header = HeaderBuilder.NewRequest(HttpMethod.GET, path);
-            header.Add("Host", host);
+            header.Add("Host", client.GetAddress().Host);
             header.Add("Connection", "Upgrade");
             header.Add("Upgrade", "websocket");
-            header.Add("Origin", "http://" + host);
+            header.Add("Origin", "http://" + client.GetAddress().Host);
             header.Add("Sec-WebSocket-Version", "13");
             header.Add("Sec-WebSocket-Key", this.secKey);
             return header.ToByteArray();
